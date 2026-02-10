@@ -1,0 +1,98 @@
+services:
+  # =====================================================
+  # PostgreSQL Database Service
+  # =====================================================
+  postgres:
+    image: postgres:16-alpine
+    container_name: multitenant-postgres-db
+    
+    # Variáveis de ambiente
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_INITDB_ARGS: "-c listen_addresses='*'"
+      POSTGRES_DB: multitenant_db
+    
+    # Portas (host:container)
+    ports:
+      - "5432:5432"
+    
+    # Volumes para persistência de dados
+    volumes:
+      - ./init-db.sql:/docker-entrypoint-initdb.d/01-init.sql
+      - postgres_data:/var/lib/postgresql/data
+    
+    # Saúde do container
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    
+    # Configurações de rede
+    networks:
+      - multitenant-network
+    
+    # Políticas de restart
+    restart: unless-stopped
+    
+    # Limite de recursos (opcional)
+    # mem_limit: 1g
+    # cpus: '1.0'
+    
+    # Logging
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # =====================================================
+  # PgAdmin (Ferramente web para gerenciar PostgreSQL)
+  # Opcional - pode ser removido se não necessário
+  # =====================================================
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: multitenant-pgadmin
+    
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    
+    ports:
+      - "5050:80"
+    
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    
+    networks:
+      - multitenant-network
+    
+    restart: unless-stopped
+    
+    depends_on:
+      postgres:
+        condition: service_healthy
+    
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+# =====================================================
+# Volumes (persistência de dados)
+# =====================================================
+volumes:
+  postgres_data:
+    driver: local
+  pgadmin_data:
+    driver: local
+
+# =====================================================
+# Redes
+# =====================================================
+networks:
+  multitenant-network:
+    driver: bridge

@@ -1,0 +1,49 @@
+# .dockerignore
+# Arquivos e diretórios que devem ser ignorados ao fazer build do Docker
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.iml
+.DS_Store
+
+# Maven
+target/
+*.jar
+*.war
+
+# Logs
+logs/
+*.log
+
+# OS
+Thumbs.db
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Documentação
+*.md
+README.md
+RUNNING.md
+TECHNICAL_SUMMARY.md
+IMPLEMENTATION_CHECKLIST.md
+MULTITENANT_CONFIG.md
+PROJECT_SUMMARY.txt
+
+# Desenvolvimento
+.mvn/
+mvnw
+mvnw.cmd
+src/
+pom.xml
