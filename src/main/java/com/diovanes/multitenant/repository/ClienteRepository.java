@@ -23,7 +23,6 @@ public class ClienteRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(ClienteRepository.class);
 
-    private final JdbcTemplate jdbcTemplate;
     private final MultitenantDataSourceManager multitenantDataSourceManager;
 
     private static final String SELECT_ALL_CLIENTES_SQL = "SELECT id, nome, email FROM clientes ORDER BY id";
@@ -32,12 +31,9 @@ public class ClienteRepository {
     /**
      * Constructor with dependencies injection.
      *
-     * @param jdbcTemplate                     the JdbcTemplate instance
      * @param multitenantDataSourceManager     the multitenant data source manager
      */
-    public ClienteRepository(JdbcTemplate jdbcTemplate, 
-                            MultitenantDataSourceManager multitenantDataSourceManager) {
-        this.jdbcTemplate = jdbcTemplate;
+    public ClienteRepository(MultitenantDataSourceManager multitenantDataSourceManager) {
         this.multitenantDataSourceManager = multitenantDataSourceManager;
     }
 

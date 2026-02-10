@@ -1,0 +1,21 @@
+tenants:
+  tenant-001:
+    host: localhost
+    port: 5432
+    user: postgres
+    password: postgres
+    database: tenant_001_db
+    schema: public
+    poolSize: 10
+    connectionTimeoutMs: 30000
+
+  tenant-002:
+    host: localhost
+    port: 5432
+    user: postgres
+    password: postgres
+    database: tenant_002_db
+    schema: public
+    poolSize: 5
+    connectionTimeoutMs: 30000
+

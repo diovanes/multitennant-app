@@ -2,7 +2,6 @@ package com.diovanes.multitenant.service;
 
 import com.diovanes.multitenant.entity.Cliente;
 import com.diovanes.multitenant.repository.ClienteRepository;
-import com.diovanes.multitenant.repository.MultitenantDataSourceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -22,18 +21,14 @@ public class ClienteService {
     private static final Logger logger = LoggerFactory.getLogger(ClienteService.class);
 
     private final ClienteRepository clienteRepository;
-    private final MultitenantDataSourceManager multitenantDataSourceManager;
 
     /**
      * Constructor with dependencies injection.
      *
      * @param clienteRepository                the cliente repository
-     * @param multitenantDataSourceManager     the multitenant data source manager
      */
-    public ClienteService(ClienteRepository clienteRepository,
-                         MultitenantDataSourceManager multitenantDataSourceManager) {
+    public ClienteService(ClienteRepository clienteRepository) {
         this.clienteRepository = clienteRepository;
-        this.multitenantDataSourceManager = multitenantDataSourceManager;
     }
 
     /**
@@ -110,11 +105,6 @@ public class ClienteService {
             return false;
         }
 
-        try {
-            return multitenantDataSourceManager.isTenantValid(tenantId);
-        } catch (Exception e) {
-            logger.error("Error validating tenant: {}", tenantId, e);
-            return false;
-        }
+        return true;
     }
 }

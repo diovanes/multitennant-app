@@ -59,6 +59,28 @@
             <artifactId>spring-boot-starter-logging</artifactId>
         </dependency>
 
+        <!-- YAML configuration parsing -->
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>2.2</version>
+        </dependency>
+
+        <!-- Caffeine Cache -->
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+            <version>3.1.8</version>
+        </dependency>
+
+        <!-- Multitenant Datasource Library -->
+        <dependency>
+           <groupId>com.diovanes.datasource</groupId>
+            <artifactId>multitenant-datasource-hikari</artifactId>
+            <version>0.1.0</version>
+        </dependency>
+
+
         <!-- Testing -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
